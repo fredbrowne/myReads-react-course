@@ -5,16 +5,28 @@ import * as BooksAPI from './BooksAPI';
 import BookShelf from './components/BookShelf'
 
 class BooksApp extends React.Component {
+
     state = {
       showSearchPage: false,
-      books: []
+      books: [],
+      b: []
     }
 
   //Recover from BooksAPI the list of books to work with
-  componentWillMount() {
+  componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
+  }
+
+  updateShelf = (b, e) => {
+    //Call BooksAPI to update shelf
+    if (e !== 'none') {
+      BooksAPI.update(b, e)
+      b.shelf = e
+      const newBooks = this.state.books.filter(book => book.id !== b.id).concat(b)
+      this.setState({ books: newBooks })
+    }
   }
 
   render() {
@@ -49,9 +61,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div className="bookshelf-reading">
-                <BookShelf shelfTitle={'Currently Reading'} books={this.state.books.filter((book) => (book.shelf === "currentlyReading"))}/>
-                <BookShelf shelfTitle={'Want to Read'} books={this.state.books.filter((book) => (book.shelf === "wantToRead"))}/>
-                <BookShelf shelfTitle={'Read'} books={this.state.books.filter((book) => (book.shelf === "read"))}/>
+                <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "currentlyReading"))}/>
+                <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "wantToRead"))}/>
+                <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "read"))}/>
               </div>
             </div>
             <div className="open-search">
