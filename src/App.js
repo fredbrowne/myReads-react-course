@@ -3,13 +3,16 @@ import './App.css'
 import * as BooksAPI from './BooksAPI';
 //import { Route } from 'react-router-dom';
 import BookShelf from './components/BookShelf'
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
 
     state = {
       showSearchPage: false,
       books: [],
-      b: []
+      query: '',
+      queryBooks: []
     }
 
   //Recover from BooksAPI the list of books to work with
@@ -29,8 +32,25 @@ class BooksApp extends React.Component {
     }
   }
 
+  updateQuery = (query) => {
+    const booksReturned = BooksAPI.search(query)
+    this.setState({ query: query })
+    this.setState({ queryBooks: booksReturned })
+    console.log('Livros: ', booksReturned)
+    //console.log('Livros: queryBooks', this.state.queryBooks)
+  }
+  clearQuery = () => {
+    this.setState({ query: '' })
+  }
   render() {
-    console.log(this.state.books)
+    const { query } = this.state.query
+    console.log(this.state.queryBooks)
+    const SearchShelf = this.state.query ? (
+      <BookShelf shelfTitle={'Searching'} shelfUpdate={this.updateShelf} books={this.state.queryBooks}/>
+    ) : (
+      <div></div>
+    );
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -46,12 +66,18 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
-
+                <input 
+                type="text" 
+                placeholder="Search by title or author"
+                value={query}
+                onChange={(event) => this.updateQuery(event.target.value)}
+                />
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+              
+              </ol>
             </div>
           </div>
         ) : (
@@ -77,3 +103,88 @@ class BooksApp extends React.Component {
 }
 
 export default BooksApp
+
+
+
+/*
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by'
+
+class ListContacts extends Component {
+    static propTypes = {
+        contacts: PropTypes.array.isRequired,
+        onDeleteContact: PropTypes.func.isRequired
+    }
+
+    state = {
+        query: ''
+    }
+    updateQuery = (query) => {
+        this.setState({ query: query })
+    }
+    clearQuery = () => {
+        this.setState({ query: '' })
+    }
+
+    render() {
+        const { contacts, onDeleteContact } = this.props
+        const { query } = this.state
+
+        let showingContacts
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingContacts = contacts.filter((contact) => match.test(contact.name))
+        } else {
+            showingContacts = contacts
+        }
+
+        showingContacts.sort(sortBy('name'))
+
+        return (
+            <div className='list-contacts'>
+                <div className='list-contacts-top'>
+                    <input
+                        className='search-contacts'
+                        type='text'
+                        placeholder='Search Contacts'
+                        value={query}
+                        onChange={(event) => this.updateQuery(event.target.value)}
+                    />
+                    <Link
+                    to='/create'
+                    className='add-contact'>
+                    Add Contact </Link>
+                </div>
+                {showingContacts.length !== contacts.length && (
+                    <div className='showing-contacts'>
+                        <span>Now showing {showingContacts.length} of {contacts.length} total</span>
+                        <button onClick={this.clearQuery}>Show all</button>
+                    </div>
+                )}
+
+                <ol className='contact-list'>
+                    {showingContacts.map((contact) => (
+                        <li key={contact.id} className='contact-list-item'>
+                            <div className='contact-avatar' style={{
+                                backgroundImage: `url(${contact.avatarURL})`
+                            }} />
+                            <div className='contact-details'>
+                                <p>{contact.name}</p>
+                                <p>{contact.email}</p>
+                            </div>
+                            <button onClick={() => onDeleteContact(contact)} className='contact-remove'>
+                            Remove
+                            </button>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        )
+    }
+}
+
+export default ListContacts
+*/
