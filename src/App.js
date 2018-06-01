@@ -3,8 +3,6 @@ import './App.css'
 import * as BooksAPI from './BooksAPI';
 //import { Route } from 'react-router-dom';
 import BookShelf from './components/BookShelf'
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
 
@@ -33,20 +31,25 @@ class BooksApp extends React.Component {
   }
 
   updateQuery = (query) => {
-    const booksReturned = BooksAPI.search(query)
-    this.setState({ query: query })
-    this.setState({ queryBooks: booksReturned })
-    console.log('Livros: ', booksReturned)
-    //console.log('Livros: queryBooks', this.state.queryBooks)
+    //If searched word is greater than 3, calls API to retrieve list of books.
+    if (query.length >= 2) {
+      BooksAPI.search(query).then((queryBooks) => {
+        if(!queryBooks.error) {
+          this.setState({ queryBooks })
+        }
+      })
+      this.setState({ query })
+    }
   }
   clearQuery = () => {
+    console.log('calling clearQuery')
     this.setState({ query: '' })
+    this.setState({ showSearchPage: false })
   }
   render() {
     const { query } = this.state.query
-    console.log(this.state.queryBooks)
-    const SearchShelf = this.state.query ? (
-      <BookShelf shelfTitle={'Searching'} shelfUpdate={this.updateShelf} books={this.state.queryBooks}/>
+    const SearchShelf = this.state.queryBooks ? (
+      <BookShelf shelfTitle={'Book Search'} shelfUpdate={this.updateShelf} books={this.state.queryBooks} shelfType='none'/>
     ) : (
       <div></div>
     );
@@ -56,7 +59,7 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <a className="close-search" onClick={this.clearQuery}>Close</a>
               <div className="search-books-input-wrapper">
                 {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -76,7 +79,7 @@ class BooksApp extends React.Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-              
+              { SearchShelf }
               </ol>
             </div>
           </div>
@@ -87,9 +90,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div className="bookshelf-reading">
-                <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "currentlyReading"))}/>
-                <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "wantToRead"))}/>
-                <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "read"))}/>
+                <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "currentlyReading"))} shelfType='currentlyReading'/>
+                <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "wantToRead"))} shelfType='wantToRead'/>
+                <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={this.state.books.filter((book) => (book.shelf === "read"))} shelfType='read'/>
               </div>
             </div>
             <div className="open-search">
