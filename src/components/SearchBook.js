@@ -39,8 +39,9 @@ class SearchBook extends Component {
 
     render() {
         const { query } = this.state.query
+        console.log('shelfUpdate', this.props.shelfUpdate)
         const SearchShelf = this.state.queryBooks ? (
-            <BookShelf shelfTitle={'Book Search'} shelfUpdate={this.updateShelf} books={this.state.queryBooks} shelfType='none'/>
+            <BookShelf shelfTitle={'Book Search'} shelfUpdate={this.props.shelfUpdate} books={this.state.queryBooks} shelfType='none'/>
           ) : (
             <div></div>
           );

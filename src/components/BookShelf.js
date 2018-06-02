@@ -3,10 +3,18 @@ import React, { Component } from 'react';
 
 class BookShelf extends Component {
 
-
+    noCoverCheck = (book) => {
+      
+    }
     render() {
       const { books } = this.props
-      console.log('ShelfType: ', this.props.shelfType)
+      const noCoverCheck = (book) => {
+        if (book.imageLinks) {
+          return <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  "url("+book.imageLinks.smallThumbnail+")" }}></div>
+        } else {
+          return <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  "url('images/no-cover.jpg')" }}></div>
+        }
+      }
         return(
             <div className="comp-current-read">
                 <div className="bookshelf">
@@ -17,7 +25,7 @@ class BookShelf extends Component {
                       <li key={book.id}>
                         <div id={book.id} className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  "url("+book.imageLinks.smallThumbnail+")" }}></div>
+                            { noCoverCheck(book) }
                             <div className="book-shelf-changer">
                             <select value={book.shelf} onChange={event => this.props.shelfUpdate(book, event.target.value)} >
                                 <option value="none" disabled>Move to...</option>
