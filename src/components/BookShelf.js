@@ -10,9 +10,9 @@ class BookShelf extends Component {
       const { books } = this.props
       const noCoverCheck = (book) => {
         if (book.imageLinks) {
-          return <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  "url("+book.imageLinks.smallThumbnail+")" }}></div>
+          return <div className="book-cover" style={{ width: 128, height: 193, backgroundSize: "cover", backgroundImage:  "url("+book.imageLinks.smallThumbnail+")" }}></div>
         } else {
-          return <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  "url('images/no-cover.jpg')" }}></div>
+          return <div className="book-cover no-cover" style={{ width: 128, height: 193, backgroundSize: "cover", backgroundPosition: 'center', backgroundImage: 'url(' + require('../images/no-cover.jpg') + ')' }}></div>
         }
       }
         return(
