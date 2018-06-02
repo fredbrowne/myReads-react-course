@@ -14,22 +14,57 @@ body, .app {
 .list-books-title {
   padding: 10px 0;
   /* CSS Gradient from https://uiGradients.com */
-  background: #fc4a1a; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #fc4a1a, #f7b733); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #fc4a1a, #f7b733); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: grey; /* fallback for old browsers */
   text-align: center;
+  height: 300px;
+  background-image: url('images/title-bg2.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  letter-spacing: 8px;
 }
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;
-  font-size: 40px;
-  color: white;
+  font-size: 15vw;
+  color: #d69005;
   font-family: 'Lobster', cursive;
+  line-height: 260px;
+  text-shadow: 2px 2px rgb(31, 31, 31);
+  
 }
-
+.iconStats { 
+  color: #d69005;
+  font-size: 300%;
+}
 .list-books-content {
   padding: 0 0 80px;
   flex: 1;
+}
+
+.shelfStatus {
+  padding: 15px 0 15px 0;
+  background-color: #eeeeee;
+  text-align: center;
+  min-height: 50px;
+  font-size: 100%;
+  width: 100%;
+}
+.shelfStatus div span {
+  vertical-align: middle;
+  margin: 7px;
+}
+.shelfStatus div.col-md-3 div {
+  background: white;
+  margin: 3px;
+  border-radius: 5px;
+  border: 1px solid #d69005;
+  box-shadow: 0 8px 6px -6px black;
+}
+.currentShelfStats {
+  font-size: 300%;
+  color: #d69005;
+  font-weight: 400;
 }
 
 .bookshelf {
@@ -58,14 +93,27 @@ body, .app {
   display: block;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: #2e7d32;
+  border-radius: 25%;
+  background: #f7b733;
   background-image: url('./icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
+}
+.open-search a:hover {
+  background: #fc4a1a;
+  background-image: url('./icons/add.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-transition: all .51s;
+  -o-transition: all .51s;
+  -webkit-transition: all .51s;
+  transition: all .51s;
+  border-radius: 50%;
 }
 
 /* search page */
@@ -153,7 +201,7 @@ body, .app {
   width: 40px;
   height: 40px;
   border-radius: 25%;
-  background: #fc4a1a;
+  background: #f7b733;
   background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -161,7 +209,7 @@ body, .app {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .book-shelf-changer:hover {
-  background: #f7b733;
+  background: #fc4a1a;
   background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;

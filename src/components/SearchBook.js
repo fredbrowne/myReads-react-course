@@ -4,9 +4,6 @@ import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
 
 class SearchBook extends Component {
-    constructor(props) {
-        super(props)
-    }
     state = { 
         query: '',
         queryBooks: []
@@ -19,7 +16,7 @@ class SearchBook extends Component {
             if(!queryBooks.error) {
               for (const book of queryBooks) {
                 book.shelf = 'none'
-                const existentBook = this.props.books.filter((b) => (b.id == book.id))
+                const existentBook = this.props.books.filter((b) => (b.id === book.id))
                 if (existentBook) {
                     for(const b of existentBook) {
                         book.shelf = b.shelf
