@@ -6,6 +6,7 @@ import * as BooksAPI from './BooksAPI'
 import BookShelf from './components/BookShelf'
 import SearchBook from './components/SearchBook'
 import FontAwesome from 'react-fontawesome'
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class App extends React.Component {
 
@@ -55,24 +56,21 @@ class App extends React.Component {
     const currentlyReading = this.state.books.filter((book) => (book.shelf === "currentlyReading"))
     const wantToRead = this.state.books.filter((book) => (book.shelf === "wantToRead"))
     const read = this.state.books.filter((book) => (book.shelf === "read"))
-    //BookShelf Counter helper to render DIV
+    //BookShelf Counter helper to render <div>
     const bookshelfStats = (icon, textSent, bookCount) => {
-      return <div className="col-md-3">
-          <div className="statsNum">
-            <FontAwesome
-                className="iconStats"
-                name={ icon }
-                size='3x'
-                style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
-              />
-            <span>{ textSent } <span className="currentShelfStats">{ bookCount }</span></span>
-          </div>
+      return <Col md={3} xs={6} >
+        <div className="statsNum">
+          <FontAwesome
+              className="iconStats"
+              name={ icon }
+              size='3x'
+              style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
+            />
+          <span>{ textSent } <span className="currentShelfStats">{ bookCount }</span></span>
         </div>
+      </Col>
     }
-    //Font-Awesome Helper to render icons
-    const fontAwesome = (icon) => {
-      return 
-    }
+
     return (
       <div className="app">
         <Route path='/search' render={() => (
@@ -85,10 +83,14 @@ class App extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="container shelfStatus">
-              { bookshelfStats('book', 'Number of Books', numberOfBooks(this.state.books)) }
-              { bookshelfStats('leanpub', 'Currently Reading', numberOfBooks(currentlyReading)) }
-              { bookshelfStats('clipboard', 'Want to Read', numberOfBooks(wantToRead)) }
-              { bookshelfStats('check-circle', 'Read', numberOfBooks(read)) }
+              <Grid>
+                <Row className="show-grid">
+                  { bookshelfStats('book', 'Number of Books', numberOfBooks(this.state.books)) }
+                  { bookshelfStats('leanpub', 'Currently Reading', numberOfBooks(currentlyReading)) }
+                  { bookshelfStats('clipboard', 'Want to Read', numberOfBooks(wantToRead)) }
+                  { bookshelfStats('check-circle', 'Read', numberOfBooks(read)) }
+                </Row >
+              </Grid>
             </div>
             <div className="list-books-content">
               <div className="bookshelf-reading">

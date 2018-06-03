@@ -35,7 +35,7 @@ body, .app {
 }
 .iconStats { 
   color: #d69005;
-  font-size: 300%;
+  font-size: 250%;
 }
 .list-books-content {
   padding: 0 0 80px;
@@ -47,7 +47,7 @@ body, .app {
   background-color: #eeeeee;
   text-align: center;
   min-height: 50px;
-  font-size: 100%;
+  font-size: 80%;
   width: 100%;
 }
 .shelfStatus div span {
