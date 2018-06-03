@@ -38,7 +38,7 @@ body, .app {
   font-size: 250%;
 }
 .list-books-content {
-  padding: 0 0 80px;
+  padding: 20px 0 80px;
   flex: 1;
 }
 
@@ -63,7 +63,7 @@ body, .app {
 }
 .currentShelfStats {
   font-size: 300%;
-  color: #d69005;
+  color: white;
   font-weight: 400;
 }
 
@@ -234,6 +234,11 @@ body, .app {
 .book-cover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
+  box-shadow: 5px 5px 20px #333;
+  
+}
+.book-cover:hover { 
+	transform: translate3d(0,0,150px) rotate3d(0,1,0,0deg);
 }
 .book-cover-title {
   padding: 20px 10px 0;

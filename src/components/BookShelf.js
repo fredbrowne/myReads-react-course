@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Panel } from 'react-bootstrap'
 
 class BookShelf extends Component {
   render() {
@@ -19,6 +20,7 @@ class BookShelf extends Component {
         return <div className="book-cover no-cover" style={{ width: 128, height: 193, backgroundSize: "cover", backgroundPosition: 'center', backgroundImage: 'url(' + require('../images/no-cover.jpg') + ')' }}></div>
       }
     }
+    
     return(
       <div className="comp-current-read">
         <div className="bookshelf">
@@ -27,22 +29,26 @@ class BookShelf extends Component {
             <ol className="books-grid">
               {books.map((book) => (
                 <li key={book.id}>
-                  <div id={book.id} className="book">
-                    <div className="book-top">
-                      { noCoverCheck(book) }
-                      <div className="book-shelf-changer">
-                        <select value={shelfValidation(book)} onChange={event => this.props.shelfUpdate(book, event.target.value)} >
-                          <option value="undefined" disabled>Move to...</option>
-                          <option value="currentlyReading">Currently Reading</option>
-                          <option value="wantToRead">Want to Read</option>
-                          <option value="read" >Read</option>
-                          <option value="none">None</option>
-                        </select>
+                  <Panel>
+                    <Panel.Body>
+                    <div id={book.id} className="book">
+                        <div className="book-top">
+                          { noCoverCheck(book) }
+                          <div className="book-shelf-changer">
+                            <select value={shelfValidation(book)} onChange={event => this.props.shelfUpdate(book, event.target.value)} >
+                              <option value="undefined" disabled>Move to...</option>
+                              <option value="currentlyReading">Currently Reading</option>
+                              <option value="wantToRead">Want to Read</option>
+                              <option value="read" >Read</option>
+                              <option value="none">None</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="book-title">{book.title}</div>
+                        <div className="book-authors">{book.author}</div>
                       </div>
-                    </div>
-                    <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.author}</div>
-                  </div>
+                    </Panel.Body>
+                  </Panel>
                 </li>
               ))}
             </ol>

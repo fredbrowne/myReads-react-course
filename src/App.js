@@ -6,7 +6,7 @@ import * as BooksAPI from './BooksAPI'
 import BookShelf from './components/BookShelf'
 import SearchBook from './components/SearchBook'
 import FontAwesome from 'react-fontawesome'
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Badge, Tabs, Tab } from 'react-bootstrap';
 
 class App extends React.Component {
 
@@ -66,7 +66,7 @@ class App extends React.Component {
               size='3x'
               style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />
-          <span>{ textSent } <span className="currentShelfStats">{ bookCount }</span></span>
+          <span>{ textSent } <Badge><span className="currentShelfStats">{ bookCount }</span></Badge></span>
         </div>
       </Col>
     }
@@ -94,9 +94,25 @@ class App extends React.Component {
             </div>
             <div className="list-books-content">
               <div className="bookshelf-reading">
-                <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={currentlyReading} shelfType='currentlyReading'/>
-                <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={wantToRead} shelfType='wantToRead'/>
-                <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={read} shelfType='read'/>
+                <div className="container">
+                  <Grid>
+                    <Row className="show-grid">
+                      <Col md={12} xs={12} >
+                        <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example">
+                          <Tab eventKey={1} title="Currently Reading">
+                            <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={currentlyReading} shelfType='currentlyReading'/>
+                          </Tab>
+                          <Tab eventKey={2} title="Want to Read">
+                            <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={wantToRead} shelfType='wantToRead'/>
+                          </Tab>
+                          <Tab eventKey={3} title="Read">
+                            <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={read} shelfType='read'/>
+                          </Tab>
+                        </Tabs>
+                      </Col>
+                    </Row>
+                  </Grid>
+                </div>
               </div>
             </div>
             <div className="open-search">
