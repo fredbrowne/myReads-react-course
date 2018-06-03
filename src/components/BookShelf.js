@@ -31,7 +31,7 @@ class BookShelf extends Component {
                 <li key={book.id}>
                   <Panel>
                     <Panel.Body>
-                    <div id={book.id} className="book">
+                      <div id={book.id} className="book">
                         <div className="book-top">
                           { noCoverCheck(book) }
                           <div className="book-shelf-changer">
