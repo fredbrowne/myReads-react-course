@@ -6,7 +6,7 @@ import * as BooksAPI from './BooksAPI'
 import BookShelf from './components/BookShelf'
 import SearchBook from './components/SearchBook'
 import FontAwesome from 'react-fontawesome'
-import { Grid, Row, Col, Badge, Tabs, Tab } from 'react-bootstrap';
+import { Grid, Row, Col, Badge } from 'react-bootstrap';
 
 class App extends React.Component {
 
@@ -98,17 +98,9 @@ class App extends React.Component {
                   <Grid>
                     <Row className="show-grid">
                       <Col md={12} xs={12} >
-                        <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example">
-                          <Tab eventKey={1} title="Currently Reading">
-                            <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={currentlyReading} shelfType='currentlyReading'/>
-                          </Tab>
-                          <Tab eventKey={2} title="Want to Read">
-                            <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={wantToRead} shelfType='wantToRead'/>
-                          </Tab>
-                          <Tab eventKey={3} title="Read">
-                            <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={read} shelfType='read'/>
-                          </Tab>
-                        </Tabs>
+                        <BookShelf shelfTitle={'Currently Reading'} shelfUpdate={this.updateShelf} books={currentlyReading} shelfType='currentlyReading'/>
+                        <BookShelf shelfTitle={'Want to Read'} shelfUpdate={this.updateShelf} books={wantToRead} shelfType='wantToRead'/>
+                        <BookShelf shelfTitle={'Read'} shelfUpdate={this.updateShelf} books={read} shelfType='read'/>
                       </Col>
                     </Row>
                   </Grid>
