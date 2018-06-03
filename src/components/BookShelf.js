@@ -3,6 +3,14 @@ import React, { Component } from 'react';
 class BookShelf extends Component {
   render() {
     const { books } = this.props
+    //If book has no shelf, assign 'None'
+    const shelfValidation = (book) => {
+      if (!book.shelf) {
+        book.shelf = 'none'
+      }
+      return book.shelf
+    }
+
     //Check if Book has image. If not, assign no-cover.jpg image to render book.
     const noCoverCheck = (book) => {
       if (book.imageLinks) {
@@ -23,8 +31,8 @@ class BookShelf extends Component {
                     <div className="book-top">
                       { noCoverCheck(book) }
                       <div className="book-shelf-changer">
-                        <select value={book.shelf} onChange={event => this.props.shelfUpdate(book, event.target.value)} >
-                          <option value="none" disabled>Move to...</option>
+                        <select value={shelfValidation(book)} onChange={event => this.props.shelfUpdate(book, event.target.value)} >
+                          <option value="undefined" disabled>Move to...</option>
                           <option value="currentlyReading">Currently Reading</option>
                           <option value="wantToRead">Want to Read</option>
                           <option value="read" >Read</option>
