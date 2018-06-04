@@ -10,36 +10,48 @@ class SearchBook extends Component {
 	}
 	//Function that will receive value from input and use in the query variable to search in the API
 	updateQuery = (query) => {
+		this.setState({ queryBooks: [] })
 		//If searched word is greater than or equal 2, calls API to retrieve list of books.
-		if (query.length >= 2) {
+		if (query.length > 2) {
 			//Call BooksAPI passing the query and retrieve all books
 			BooksAPI.search(query).then((queryBooks) => {
-				//Only continue if there are no errors returned from BooksAPI
-				if(!queryBooks.error) {
-					//Iterate through books for shelf validation
-					for (const book of queryBooks) {
-						//Default, non-shelf book will be defined as NONE
-						book.shelf = 'none'
-						//Filter Books already existent to compare with books recovered.
-						//This is necessary to retrieve Shelf Status and apply to recovered books from API.
-						const existentBook = this.props.books.filter((b) => (b.id === book.id))
-						if (existentBook) {
-							//Iterate again the Object and assign the same shelf
-							for(const b of existentBook) {
-								book.shelf = b.shelf
+				//This IF will double check if after the API has returned, the user removed the input in order
+				//to erase the query.
+				if (this.state.query.length < 2) {
+					this.setState({ queryBooks: [] })
+					} else {
+					//Only continue if there are no errors returned from BooksAPI
+					if(!queryBooks.error) {
+						//Iterate through books for shelf validation
+						for (const book of queryBooks) {
+							//Default, non-shelf book will be defined as NONE
+							book.shelf = 'none'
+							//Filter Books already existent to compare with books recovered.
+							//This is necessary to retrieve Shelf Status and apply to recovered books from API.
+							const existentBook = this.props.books.filter((b) => (b.id === book.id))
+							if (existentBook) {
+								//Iterate again the Object and assign the same shelf
+								for(const b of existentBook) {
+									book.shelf = b.shelf
+								}
+								//Concatenate the new book with the current shelf to update the state.
+								const newShelf = this.state.queryBooks.filter(b => b.id !== book.id).concat(book)
+								this.setState({ queryBooks: newShelf })
 							}
-							//Concatenate the new book with the current shelf to update the state.
-							const newShelf = this.state.queryBooks.filter(b => b.id !== book.id).concat(book)
-							this.setState({ queryBooks: newShelf })
 						}
+						this.setState({ queryBooks })
+					} else {
+						//Erase query if API returns error
+						this.setState({ queryBooks: [] })
+						this.setState({ query: '' })
 					}
-					this.setState({ queryBooks })
 				}
 			})
 			this.setState({ query })
 		} else {
-				//Erase query if removes the input value
+				//Erase query if user removes the input value
 				this.setState({ queryBooks: []})
+				this.setState({ query: '' })
 		}
 	}
 

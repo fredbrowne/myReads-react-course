@@ -1,7 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Link } from 'react-router-dom'
-import { Route } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './components/BookShelf'
 import SearchBook from './components/SearchBook'
@@ -11,7 +10,6 @@ import { Grid, Row, Col, Badge } from 'react-bootstrap';
 class App extends React.Component {
 
   state = {
-    showSearchPage: false,
     books: [],
     query: '',
     queryBooks: []
@@ -41,7 +39,6 @@ class App extends React.Component {
   //Clear query and return to main page
   clearQuery = () => {
     this.setState({ query: '' })
-    this.setState({ showSearchPage: false })
     this.setState({ queryBooks: []})
   }
   
@@ -113,8 +110,7 @@ class App extends React.Component {
             </div>
             <div className="open-search">
               <Link 
-                to="/search"
-                onClick={() => this.setState({ showSearchPage: true })}>Add a book
+                to="/search" >Add a book
               </Link>
             </div>
           </div>)}
