@@ -31,6 +31,10 @@ class App extends React.Component {
       b.shelf = e
       const newBooks = this.state.books.filter(book => book.id !== b.id).concat(b)
       this.setState({ books: newBooks })
+    } else {
+      //This filter will remove from current shelf once selected as 'none'
+      const newBooks = this.state.books.filter((book) => book.id !== b.id)
+      this.setState({ books: newBooks })
     }
   }
 
